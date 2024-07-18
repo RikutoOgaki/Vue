@@ -1,47 +1,34 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script setup>
+  import { ref , reactive} from 'vue'
+
+  // チュートリアル１内容
+  const message = ref('Make Me tomato');
+  const counter = reactive({count: 0});
+
+  // class名の付け方
+  const titleClass = ref('title');
+
+  // DOM操作方法
+  const count = ref(0)
+  function plus() {
+    count.value++
+  }
+  function minus(){
+    count.value--
+  }
+
+  // 
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <h1 :class="titleClass">{{ message }}</h1>
+  <p>Count is: {{ count }}</p>
+  <button @click="plus">PLUS</button>
+  <button @click="minus">MINUS</button>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+<style>
+  .title{
+    color: tomato;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
