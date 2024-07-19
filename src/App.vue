@@ -30,21 +30,23 @@
   }
 
   // リストレンダリング
+  // 算出プロパティー
   let id = 0;
   const newTodo = ref('');
+  const hideCompleted = ref(false)
   const todos = ref([
-  { id: id++, text: 'Learn HTML' },
-  { id: id++, text: 'Learn JavaScript' },
-  { id: id++, text: 'Learn Vue' }
+  { id: id++, text: 'Learn HTML', done:true },
+  { id: id++, text: 'Learn JavaScript', done:true },
+  { id: id++, text: 'Learn Vue', done:false }
   ])
   function addTodo(){
-    todos.value.push({id: id++ , text:newTodo.value});
+    todos.value.push({id: id++ , text:newTodo.value ,done:false});
     newTodo.value = ''
   }
-
   function removeTodo(todo){
     todos.value = todos.value.filter((t) => t !== todo);
   }
+
 </script>
 
 <template>
@@ -67,20 +69,33 @@
   <p v-else>こう</p>
 
   <!-- リストレンダリング -->
+  <!-- 算出プロパティー -->
   <form @submit.prevent="addTodo">
     <input v-model="newTodo" required placeholder="addTask">
     <button>add</button>
   </form>
   <ul>
     <li v-for="todo in todos" :key="todos.id">
-      {{ todo.text }}
+      <input type="checkbox" v-model="todo.done">
+      <span :class="{done:todo.done}">
+        {{ todo.text }}
+      </span>
       <button @click="removeTodo(todo)">remove</button>
     </li>
   </ul>
+  <button @click="hideCompleted = !hideCompleted">
+    {{ hideCompleted ? 'Show all' : 'Hide completed' }}
+  </button>
+
+  
 </template>
 
 <style>
   .title{
     color: tomato;
+  }
+
+  .done{
+    text-decoration: line-through;
   }
 </style>
