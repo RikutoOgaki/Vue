@@ -1,5 +1,5 @@
 <script setup>
-  import { ref , reactive} from 'vue'
+import { ref , reactive , onMounted} from 'vue'
 
   // 宣言的レンダリング
   const message = ref('Make Me tomato');
@@ -47,6 +47,26 @@
     todos.value = todos.value.filter((t) => t !== todo);
   }
 
+  // ライフサイクルとテンプレート参照
+  const pElementRef = ref(null)
+  onMounted(() => {
+    pElementRef.value.textContent = 'mounted!!'
+  })
+
+  // ウォッチャー
+  // const todoId = ref(1)
+  // const todoData = ref(null)
+
+  // async function fetchData(){
+  //   todoData.value = null
+  //   const res = await fetch(
+  //     `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+  //   )
+  //   todoData.value = await res.json()
+  // }
+  // fetchData()
+
+
 </script>
 
 <template>
@@ -87,7 +107,15 @@
     {{ hideCompleted ? 'Show all' : 'Hide completed' }}
   </button>
 
-  
+  <!-- ライフサイクルとテンプレート参照 -->
+  <p ref="pElementRef">Hello!</p>
+
+  <!-- ウォッチャー
+  <p>Todo id: {{ todoId }}</p>
+  <button @click="todoId++" :disabled="!todoData">Fecth Next Todo</button>
+  <p v-if="!todoData">Loading...</p>
+  <pre v-else>{{ todoData }}</pre> -->
+
 </template>
 
 <style>
